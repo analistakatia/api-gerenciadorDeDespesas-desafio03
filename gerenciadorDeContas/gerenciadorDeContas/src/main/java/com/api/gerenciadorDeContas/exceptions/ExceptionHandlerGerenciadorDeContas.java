@@ -1,30 +1,21 @@
 package com.api.gerenciadorDeContas.exceptions;
 
-import lombok.Data;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 public class ExceptionHandlerGerenciadorDeContas extends ResponseEntityExceptionHandler {
-    @Autowired
-    MessageSource messageSource;
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({ContaNaoLocalizadaException.class})
+    public @ResponseBody
+    String handlerBusinessRules(ContaNaoLocalizadaException exception) {
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    protected ResponseEntity<String> HttpMessageNotReadableException()
-
-
-@Data
-    public static class MensagemErro{
-        private String MensagemDoUsuario;
-        private String MensagemDoDev;
-}
-
+        return "Conta não localizada no sistema.";
+    }
 }
 
 

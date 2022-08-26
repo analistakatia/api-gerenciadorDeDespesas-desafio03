@@ -1,13 +1,12 @@
 package com.api.gerenciadorDeContas.services;
 
 import com.api.gerenciadorDeContas.Tipo;
+import com.api.gerenciadorDeContas.exceptions.ContaNaoLocalizadaException;
 import com.api.gerenciadorDeContas.models.ContasAPagarModel;
 import com.api.gerenciadorDeContas.Status;
 import com.api.gerenciadorDeContas.repositories.IContasAPagarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,10 +41,11 @@ public class ContasAPagarService {
         return iContasAPagarRepository.save(contasAPagarModel);
     }
 
+
     public ContasAPagarModel alterarContasAPagar(ContasAPagarModel contasAPagarModel, Long codigo){
         Optional<ContasAPagarModel> optionalContasAPagarModel = iContasAPagarRepository.findById(codigo);
         if (optionalContasAPagarModel.isEmpty()){
-            throw new RuntimeException("CONTA INEXISTENTE NO SISTEMA");
+            throw new ContaNaoLocalizadaException();
         }else {
             ContasAPagarModel contaAtualizada = optionalContasAPagarModel.get();
             Status statusAtualizado = contasAPagarModel.getStatus();

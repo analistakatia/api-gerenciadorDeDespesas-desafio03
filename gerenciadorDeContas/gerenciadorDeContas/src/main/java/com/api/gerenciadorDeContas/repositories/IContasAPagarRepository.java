@@ -15,4 +15,5 @@ public interface IContasAPagarRepository extends JpaRepository<ContasAPagarModel
 
     public List<ContasAPagarModel> findByTipo(Tipo tipo);
 
+
 }

@@ -42,6 +42,7 @@ public class ContasAPagarController {
         return ResponseEntity.ok(contasAPagarService.alterarContasAPagar(contasAPagarModel, id));
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/contas/{codigo}")
     public void deletarContas(@PathVariable Long codigo){
         contasAPagarService.deletarConta(codigo);
@@ -49,6 +50,7 @@ public class ContasAPagarController {
 
     @GetMapping(path = "/contas/tipo/{tipo}")
     public List<ContasAPagarModel> findByTipo(@PathVariable Tipo tipo){
+
         return contasAPagarService.findByTipo(tipo);
     }
 
@@ -56,8 +58,4 @@ public class ContasAPagarController {
     public List<ContasAPagarModel> findByStatus(@PathVariable Status status){
         return contasAPagarService.findByStatus(status);
     }
-
-
-
-
 }
