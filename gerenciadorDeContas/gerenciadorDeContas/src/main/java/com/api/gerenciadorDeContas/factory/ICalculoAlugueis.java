@@ -1,6 +1,6 @@
-package com.api.gerenciadorDeContas.models;
+package com.api.gerenciadorDeContas.factory;
 
-import com.api.gerenciadorDeContas.RecebimentoAlugueis;
+import com.api.gerenciadorDeContas.enumerations.RecebimentoAlugueis;
 
 import java.math.BigDecimal;
 
