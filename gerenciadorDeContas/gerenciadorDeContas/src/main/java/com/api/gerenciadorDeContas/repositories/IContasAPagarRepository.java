@@ -1,7 +1,7 @@
 package com.api.gerenciadorDeContas.repositories;
 
-import com.api.gerenciadorDeContas.Status;
-import com.api.gerenciadorDeContas.Tipo;
+import com.api.gerenciadorDeContas.enumerations.Status;
+import com.api.gerenciadorDeContas.enumerations.Tipo;
 import com.api.gerenciadorDeContas.models.ContasAPagarModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

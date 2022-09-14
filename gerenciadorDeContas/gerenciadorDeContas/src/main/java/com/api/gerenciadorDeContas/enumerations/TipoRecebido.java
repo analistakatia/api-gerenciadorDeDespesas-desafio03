@@ -1,4 +1,4 @@
-package com.api.gerenciadorDeContas;
+package com.api.gerenciadorDeContas.enumerations;
 
 public enum TipoRecebido {
 

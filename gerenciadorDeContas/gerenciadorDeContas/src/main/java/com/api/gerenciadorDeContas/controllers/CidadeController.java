@@ -37,6 +37,7 @@ public class CidadeController {
         return cidadeService.alterarCidade(cidade);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/cidades/{codigo}")
     public void deletarCidade(@PathVariable Long codigo){
         cidadeService.deletarCidade(codigo);

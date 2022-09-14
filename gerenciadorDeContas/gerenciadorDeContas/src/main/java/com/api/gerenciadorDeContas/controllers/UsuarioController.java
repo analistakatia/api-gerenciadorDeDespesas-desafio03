@@ -1,5 +1,6 @@
 package com.api.gerenciadorDeContas.controllers;
 
+import com.api.gerenciadorDeContas.dtos.UsuarioDto;
 import com.api.gerenciadorDeContas.models.Usuario;
 import com.api.gerenciadorDeContas.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,8 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping(path = "/usuarios")
-    public List<Usuario> buscarTodosUsuarios(){
+    public List<UsuarioDto> buscarTodosUsuarios(){
+
         return usuarioService.buscarTodos();
     }
 
@@ -36,6 +38,7 @@ public class UsuarioController {
         return usuarioService.alterarUsuario(usuario);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/usuarios/{codigo}")
     public void deletarUsuario(@PathVariable Long codigo){
         usuarioService.deletarUsuario(codigo);

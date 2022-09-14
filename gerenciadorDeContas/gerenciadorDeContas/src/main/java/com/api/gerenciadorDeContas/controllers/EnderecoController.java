@@ -37,6 +37,7 @@ public class EnderecoController {
         return enderecoService.alterarEndereco(endereco);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/enderecos/{codigo}")
     public void deletarEndereco(@PathVariable Long codigo){
         enderecoService.deletarEndereco(codigo);

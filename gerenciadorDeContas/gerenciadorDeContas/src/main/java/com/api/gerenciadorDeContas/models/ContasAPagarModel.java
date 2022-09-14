@@ -1,7 +1,7 @@
 package com.api.gerenciadorDeContas.models;
 
-import com.api.gerenciadorDeContas.Status;
-import com.api.gerenciadorDeContas.Tipo;
+import com.api.gerenciadorDeContas.enumerations.Status;
+import com.api.gerenciadorDeContas.enumerations.Tipo;
 import lombok.Data;
 
 import javax.persistence.*;

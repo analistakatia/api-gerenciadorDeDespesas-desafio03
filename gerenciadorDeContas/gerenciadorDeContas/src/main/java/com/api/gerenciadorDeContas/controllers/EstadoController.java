@@ -37,6 +37,7 @@ public class EstadoController {
         return estadoService.alterarEstado(estado);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/estados/{codigo}")
     public void deletarEstados(@PathVariable Long codigo){
         estadoService.deletarEstado(codigo);

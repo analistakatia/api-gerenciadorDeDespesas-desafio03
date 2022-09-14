@@ -20,4 +20,12 @@ public class Endereco {
     private String bairro;
     private String cep;
     private String pontoReferencia;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "codigo")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "cidade_id", referencedColumnName = "codigo")
+    private Cidade cidade;
 }

@@ -1,14 +1,17 @@
 package com.api.gerenciadorDeContas.services;
 
-import com.api.gerenciadorDeContas.RecebimentoAlugueis;
-import com.api.gerenciadorDeContas.Status;
-import com.api.gerenciadorDeContas.TipoRecebido;
+import com.api.gerenciadorDeContas.enumerations.RecebimentoAlugueis;
+import com.api.gerenciadorDeContas.enumerations.Status;
+import com.api.gerenciadorDeContas.enumerations.TipoRecebido;
 import com.api.gerenciadorDeContas.exceptions.ContaNaoLocalizadaException;
+import com.api.gerenciadorDeContas.factory.AlugueisFactory;
 import com.api.gerenciadorDeContas.models.ContasAReceber;
 import com.api.gerenciadorDeContas.repositories.IContasAReceber;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +23,7 @@ public class ContasAReceberService {
     @Autowired
     private IContasAReceber iContasAReceber;
 
+
     public List<ContasAReceber> buscarTodasAsContasAReceber(){
         return iContasAReceber.findAll();
     }
@@ -28,41 +32,33 @@ public class ContasAReceberService {
         return iContasAReceber.findById(codigo);
     }
 
-    public Status validaData(LocalDate data){
-        LocalDate dataAtual = LocalDate.now();
-        if (data.isAfter(dataAtual)){
-            return Status.AGUARDANDO;
-        }else if (data.isBefore(dataAtual)) {
-            return Status.VENCIDA;
-        }else {
-            return Status.PAGO;
+    public ContasAReceber cadastrarContasAReceber(ContasAReceber contasAReceber, AlugueisFactory alugueisFactory) {
+        if (contasAReceber.getTipoRecebido().equals(TipoRecebido.ALUGUEIS)) {
+            LocalDate dataAtual = LocalDate.now();
+            if (contasAReceber.getDataDeVencimento().isBefore(dataAtual)) {
+                contasAReceber.setRecebimentoAlugueis(RecebimentoAlugueis.EM_ATRASO);
+                contasAReceber.setValorRecebido(alugueisFactory.getICalculoAluguel(RecebimentoAlugueis.EM_ATRASO).calcular(contasAReceber.getValorRecebido()));
+            } else if (contasAReceber.getDataDeVencimento().isAfter(dataAtual)) {
+                contasAReceber.setRecebimentoAlugueis(RecebimentoAlugueis.ADIANTADO);
+                contasAReceber.setValorRecebido(alugueisFactory.getICalculoAluguel(RecebimentoAlugueis.ADIANTADO).calcular(contasAReceber.getValorRecebido()));
+            } else {
+                contasAReceber.setRecebimentoAlugueis(RecebimentoAlugueis.EM_DIA);
+                contasAReceber.setValorRecebido(alugueisFactory.getICalculoAluguel(RecebimentoAlugueis.EM_DIA).calcular(contasAReceber.getValorRecebido()));
+
+            }
+
         }
-
-    }
-
-    public ContasAReceber cadastrarContasAReceber(ContasAReceber contasAReceber){
-        contasAReceber.setTipoRecebido(contasAReceber.getTipoRecebido());
         return iContasAReceber.save(contasAReceber);
     }
 
     public ContasAReceber alterarContasAReceber(ContasAReceber contasAReceber, Long codigo){
-        Optional<ContasAReceber> optionalContasAReceber = iContasAReceber.findById(codigo);
-        if (optionalContasAReceber.isEmpty()){
-            throw new ContaNaoLocalizadaException();
-        }else {
-            ContasAReceber contaAtualizada = optionalContasAReceber.get();
-            RecebimentoAlugueis recebimentoAlugueisAtualizado = contasAReceber.getRecebimento();
-            contaAtualizada.setRecebimento(recebimentoAlugueisAtualizado);
-            contaAtualizada.setDataDeRecebimento(LocalDateTime.now());
-
-            return iContasAReceber.save(contaAtualizada);
-        }
+       return iContasAReceber.save(contasAReceber);
     }
 
     public void deletarContasAReceber(Long codigo){
         iContasAReceber.deleteById(codigo);
     }
-//
+
 //    public List<ContasAReceber> findByStatus(Status status){
 //        return iContasAReceber.findByStatus(status);
 //    }

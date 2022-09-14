@@ -18,22 +18,10 @@ public class UsuarioService {
     @Autowired
     private IUsuarioRepository iUsuarioRepository;
 
-    public List<Usuario> buscarTodos(){
-        //List<Usuario> buscar = iUsuarioRepository.findAll();
-        return iUsuarioRepository.findAll();
+    public List<UsuarioDto> buscarTodos(){
+        List<Usuario> usuarios = iUsuarioRepository.findAll();
+        return UsuarioDto.converterUsuario(usuarios);
     }
-
-//    private UsuarioDto converterParaDto(Usuario usuario) {
-//        UsuarioDto dto = new UsuarioDto();
-//        dto.setCodigo(usuario.getCodigo());
-//        dto.setNome(usuario.getNomeUsuario());
-//        dto.setDataNascimento(usuario.getDataNascimento());
-//        dto.setEmail(usuario.getEmail());
-//        return dto;
-//    }
-//    private static List<UsuarioDto> converterListParaDto(List<Usuario> usuarios){
-//        return usuarios.stream().map(UsuarioDto::new).collect(Collectors.toList());
-//    }
 
     public Optional<Usuario> buscarPorId(Long codigo){
         return iUsuarioRepository.findById(codigo);

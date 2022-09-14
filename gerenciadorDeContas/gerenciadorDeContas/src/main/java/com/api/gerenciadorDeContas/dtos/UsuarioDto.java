@@ -1,33 +1,37 @@
 package com.api.gerenciadorDeContas.dtos;
 
 import com.api.gerenciadorDeContas.models.Usuario;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Column;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioDto {
 
     private Long codigo;
-    @NotBlank(message = "Nome não pode estar em branco")
     private String nome;
-    //@JsonFormat(pattern = "dd/MM/yyyy")
-    private String dataNascimento;
-    @NotBlank @Email(message = "Endereço de e-mail invalido")
+    private LocalDate dataNascimento;
     private String email;
-    @NotBlank @CPF(message = "CPF precisa ser informado")
-    private String cpf;
 
-    public UsuarioDto(Usuario usuario) {
-        codigo = usuario.getCodigo();
-        nome = usuario.getNomeUsuario();
-        dataNascimento = usuario.getDataNascimento();
-        email = usuario.getEmail();
+    public static UsuarioDto converterParaDto(Usuario usuario){
+        return new UsuarioDto(usuario.getCodigo(), usuario.getNomeUsuario(), usuario.getDataNascimento(), usuario.getEmail());
     }
+
+    public static List<UsuarioDto> converterUsuario(List<Usuario> usuarios){
+        List<UsuarioDto> listaUsuarios = new ArrayList<>();
+        for (Usuario usuario : usuarios){
+            UsuarioDto usuarioResposta = new UsuarioDto(usuario.getCodigo(), usuario.getNomeUsuario(), usuario.getDataNascimento(), usuario.getEmail());
+            listaUsuarios.add(usuarioResposta);
+        }
+        return listaUsuarios;
+    }
+
 }

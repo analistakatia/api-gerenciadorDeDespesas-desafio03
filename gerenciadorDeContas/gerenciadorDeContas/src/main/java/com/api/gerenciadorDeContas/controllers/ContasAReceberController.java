@@ -1,13 +1,13 @@
 package com.api.gerenciadorDeContas.controllers;
 
-import com.api.gerenciadorDeContas.RecebimentoAlugueis;
-import com.api.gerenciadorDeContas.Status;
-import com.api.gerenciadorDeContas.TipoRecebido;
+import com.api.gerenciadorDeContas.enumerations.RecebimentoAlugueis;
+import com.api.gerenciadorDeContas.enumerations.Status;
+import com.api.gerenciadorDeContas.enumerations.TipoRecebido;
+import com.api.gerenciadorDeContas.factory.AlugueisFactory;
 import com.api.gerenciadorDeContas.models.ContasAReceber;
 import com.api.gerenciadorDeContas.services.ContasAReceberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,8 +31,8 @@ public class ContasAReceberController {
 
     @PostMapping(path = "/contasReceber")
     @ResponseStatus(HttpStatus.CREATED)
-    public ContasAReceber cadastrarContasReceber(@RequestBody ContasAReceber contasAReceber){
-        return contasAReceberService.cadastrarContasAReceber(contasAReceber);
+    public ContasAReceber cadastrarContasReceber(@RequestBody ContasAReceber contasAReceber, AlugueisFactory alugueisFactory){
+        return contasAReceberService.cadastrarContasAReceber(contasAReceber, alugueisFactory);
     }
 
     @PutMapping(path = "/contasReceber/{codigo}")
@@ -40,12 +40,13 @@ public class ContasAReceberController {
         return contasAReceberService.alterarContasAReceber(contasAReceber, codigo);
     }
 
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/contasReceber/{codigo}")
     public void deletarContasAReceber(@PathVariable Long codigo){
         contasAReceberService.deletarContasAReceber(codigo);
     }
-//
+
 //    @GetMapping(path = "/contasReceber/status/{status}")
 //    public List<ContasAReceber> findByStatus(@PathVariable Status status){
 //        return contasAReceberService.findByStatus(status);

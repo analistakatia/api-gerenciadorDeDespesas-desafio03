@@ -1,7 +1,7 @@
 package com.api.gerenciadorDeContas.controllers;
 
-import com.api.gerenciadorDeContas.Status;
-import com.api.gerenciadorDeContas.Tipo;
+import com.api.gerenciadorDeContas.enumerations.Status;
+import com.api.gerenciadorDeContas.enumerations.Tipo;
 import com.api.gerenciadorDeContas.models.ContasAPagarModel;
 import com.api.gerenciadorDeContas.services.ContasAPagarService;
 import org.springframework.beans.factory.annotation.Autowired;

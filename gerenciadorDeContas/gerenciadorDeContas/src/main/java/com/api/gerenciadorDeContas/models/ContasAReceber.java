@@ -1,8 +1,8 @@
 package com.api.gerenciadorDeContas.models;
 
-import com.api.gerenciadorDeContas.RecebimentoAlugueis;
-import com.api.gerenciadorDeContas.Status;
-import com.api.gerenciadorDeContas.TipoRecebido;
+import com.api.gerenciadorDeContas.enumerations.RecebimentoAlugueis;
+import com.api.gerenciadorDeContas.enumerations.Status;
+import com.api.gerenciadorDeContas.enumerations.TipoRecebido;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -29,29 +29,24 @@ public class ContasAReceber {
     private Long codigo;
 
     @Column(name = "status", length = 50)
-    @Enumerated(value = EnumType.STRING)
-    private Status status;
+    private RecebimentoAlugueis recebimentoAlugueis;
 
     @Column(name = "recebimento", length = 20)
-    @Enumerated(value = EnumType.STRING)
-    private RecebimentoAlugueis recebimento;
+    private String recebimento;
 
     @Column(length = 20, nullable = false)
     private BigDecimal valorRecebido;
 
     @Column(name = "tiporecebido", length = 10)
-    @Enumerated(value = EnumType.STRING)
     private TipoRecebido tipoRecebido;
 
-    @Column(name = "dataDeVencimento", length = 10)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @Column()
     private LocalDate dataDeVencimento;
 
-    @Column(name = "dataDeRecebimento", length = 10)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @Column()
     private LocalDateTime dataDeRecebimento;
+
+    @ManyToOne
+    @JoinColumn(name = "usario_id", referencedColumnName = "codigo")
+    private Usuario usuario;
 }

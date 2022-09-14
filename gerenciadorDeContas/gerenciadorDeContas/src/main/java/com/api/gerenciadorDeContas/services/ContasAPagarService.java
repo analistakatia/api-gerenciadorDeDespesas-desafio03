@@ -1,9 +1,9 @@
 package com.api.gerenciadorDeContas.services;
 
-import com.api.gerenciadorDeContas.Tipo;
+import com.api.gerenciadorDeContas.enumerations.Tipo;
 import com.api.gerenciadorDeContas.exceptions.ContaNaoLocalizadaException;
 import com.api.gerenciadorDeContas.models.ContasAPagarModel;
-import com.api.gerenciadorDeContas.Status;
+import com.api.gerenciadorDeContas.enumerations.Status;
 import com.api.gerenciadorDeContas.repositories.IContasAPagarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

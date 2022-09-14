@@ -1,9 +1,7 @@
 package com.api.gerenciadorDeContas.factory;
 
-import com.api.gerenciadorDeContas.enumerations.RecebimentoAlugueis;
-
 import java.math.BigDecimal;
 
-public interface ICalculoRecebimentoAluguel {
-    public BigDecimal iCalculoRecebimentoAluguel(RecebimentoAlugueis recebimentoAlugueis);
+public interface ICalculoAlugueis {
+    BigDecimal calcular(BigDecimal valorAluguel);
 }
